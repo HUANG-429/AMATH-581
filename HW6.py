@@ -7,6 +7,7 @@ import time
 
 nx, ny = 64, 64
 N2 = 30
+nu = 0.001
 Lx, Ly = 20, 20
 N = nx * ny
 tspan = np.arange(0, 4.5, 0.5)
@@ -34,8 +35,8 @@ u_flat = fft2(u).reshape(N)
 v_flat = fft2(v).reshape(N)
 
 uv = np.hstack([u_flat, v_flat])
-# print(uv)
-# print(np.shape(uv))
+print(uv)
+print(np.shape(uv))
 
 kx = (2 * np.pi / Lx) * np.concatenate((np.arange(0, nx/2), np.arange(-nx/2, 0)))
 kx[0] = 1e-6
@@ -141,10 +142,10 @@ print(np.shape(chebsol.y))
 
 for j, t in enumerate(tspan):
     U2 = chebsol.y[:((N2+1)**2), j].reshape(N2+1, N2+1)
-    V2 = chebsol.y[((N2+1)**2):, j].reshape(N2+1, N2+1)
+    # V2 = chebsol.y[((N2+1)**2):, j].reshape(N2+1, N2+1)
     UV = chebsol.y[:((N2+1)**2), j].reshape(N2+1, N2+1) + chebsol.y[((N2+1)**2):, j].reshape(N2+1, N2+1)
     plt.subplot(3, 3, j + 1)
-    plt.pcolor(xc, yc, UV)
+    plt.pcolor(xc, yc, U2)
     plt.title(f'Cheb Time: {t}')
     plt.colorbar()
 plt.tight_layout()
